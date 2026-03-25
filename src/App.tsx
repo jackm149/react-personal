@@ -1,17 +1,24 @@
 import "./App.css";
 import Clock from "./components/timeComponent";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 
 export default function App(): React.JSX.Element {
-    //sending to googleSheet
-    function sendToSheet() {
+    //implement userAuth system, default value is me right now :(
+    const user: string = "Jack";
+
+    //which button is disabled
+    const [whichDisabled, setWhichDisabled] = useState<string>("OUT");
+
+    //sending to googleSheet, takes in a message string.
+    function sendToSheet(message: string) {
         fetch(
-            "https://script.google.com/macros/s/AKfycbwK7HN6e5rKJBMa2TiTSLpv4JY9KF15alWJd0om1LnfSZEVXMfhW3Sz3ngOXXhGH9kr/exec",
+            "https://script.google.com/macros/s/AKfycbyIUcJEcPKGCoVyhdwEJX6RJFvEBwUY9Wy5aH_GXKs65AmQL7jZRuPASlHmkWA97fVF/exec",
             {
                 method: "POST",
                 body: JSON.stringify({
-                    message: "chief keef",
+                    message: message,
+                    user: user,
                 }),
                 headers: {
                     "Content-Type": "text/plain",
@@ -25,8 +32,27 @@ export default function App(): React.JSX.Element {
             <div className="clock">
                 <Clock />
             </div>
+
             <div className="buttonDefault">
-                <Button onClick={sendToSheet}>Send to GSheet</Button>
+                <Button
+                    onClick={() => {
+                        sendToSheet("IN");
+                        setWhichDisabled("IN");
+                    }}
+                    disabled={whichDisabled === "IN"}
+                >
+                    IN
+                </Button>
+
+                <Button
+                    onClick={() => {
+                        sendToSheet("OUT");
+                        setWhichDisabled("OUT");
+                    }}
+                    disabled={whichDisabled === "OUT"}
+                >
+                    OUT
+                </Button>
             </div>
         </div>
     );
