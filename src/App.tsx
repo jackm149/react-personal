@@ -1,16 +1,14 @@
 import "./App.css";
 import Clock from "./components/timeComponent";
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 
 export default function App(): React.JSX.Element {
-    //implement userAuth system, default value is me right now :(
-    const user: string = "Dan";
-
     //which button is disabled depending on user clock
     const [whichDisabled, setWhichDisabled] = useState<string>("OUT");
+    const [user, setUser] = useState<string>("");
 
-    //sending to googleSheet, takes in a message string.
+    //sending to googleSheet, takes in a message either IN | OUT based on buttons.
     function sendToSheet(message: string) {
         fetch(
             "https://script.google.com/macros/s/AKfycbx4cjXYRjU-MkjzxOMqWLHSvfCkWNXGfq0JLLPYy1J36LzTzitGOub9DeJLI7cUxpvr/exec",
@@ -27,11 +25,22 @@ export default function App(): React.JSX.Element {
         );
     }
 
+    //changing name in textbox controller
+    function updateName(event: React.ChangeEvent<HTMLInputElement>) {
+        setUser(event.target.value);
+    }
+
     return (
         <div className="app">
             <div className="clock">
                 <Clock />
             </div>
+
+            <Form.Group>
+                <Form.Label>Name:</Form.Label>
+                <Form.Control value={user} onChange={updateName} />
+            </Form.Group>
+            <div>Curr User: {user}</div>
 
             <div className="buttonDefault">
                 <Button
@@ -39,7 +48,7 @@ export default function App(): React.JSX.Element {
                         sendToSheet("IN");
                         setWhichDisabled("IN");
                     }}
-                    disabled={whichDisabled === "IN"}
+                    disabled={whichDisabled === "IN" || user === ""}
                 >
                     IN
                 </Button>
@@ -49,7 +58,7 @@ export default function App(): React.JSX.Element {
                         sendToSheet("OUT");
                         setWhichDisabled("OUT");
                     }}
-                    disabled={whichDisabled === "OUT"}
+                    disabled={whichDisabled === "OUT" || user === ""}
                 >
                     OUT
                 </Button>

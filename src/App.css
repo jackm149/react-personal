@@ -1,27 +1,29 @@
 body {
-  margin: 0;
+    margin: 0;
 }
 
 .app {
-  background: #807f7f;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    background: #807f7f;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
 }
 
 .clock {
-  margin-top: 40px;
-  background: #000000;
-  border-radius: 12px;
-  padding: 20px;
-  width: 200px;
+    margin-top: 40px;
+    background: #000000;
+    border-radius: 12px;
+    padding: 20px;
+    width: 200px;
+    color: white;
 }
 
 .buttonDefault {
-  margin-top: 40px;
-  background: #000000;
-  border-radius: 12px;
-  padding: 20px;
-  width: 200px;
+    margin-top: 40px;
+    background: #000000;
+    border-radius: 12px;
+    padding: 20px;
+    width: 200px;
 }
