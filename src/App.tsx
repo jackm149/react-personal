@@ -5,15 +5,15 @@ import { Button } from "react-bootstrap";
 
 export default function App(): React.JSX.Element {
     //implement userAuth system, default value is me right now :(
-    const user: string = "Jack";
+    const user: string = "Dan";
 
-    //which button is disabled
+    //which button is disabled depending on user clock
     const [whichDisabled, setWhichDisabled] = useState<string>("OUT");
 
     //sending to googleSheet, takes in a message string.
     function sendToSheet(message: string) {
         fetch(
-            "https://script.google.com/macros/s/AKfycbyIUcJEcPKGCoVyhdwEJX6RJFvEBwUY9Wy5aH_GXKs65AmQL7jZRuPASlHmkWA97fVF/exec",
+            "https://script.google.com/macros/s/AKfycbx4cjXYRjU-MkjzxOMqWLHSvfCkWNXGfq0JLLPYy1J36LzTzitGOub9DeJLI7cUxpvr/exec",
             {
                 method: "POST",
                 body: JSON.stringify({
