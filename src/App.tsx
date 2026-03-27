@@ -63,6 +63,13 @@ export default function App(): React.JSX.Element {
                     OUT
                 </Button>
             </div>
+
+            <ul>
+                Bugs right now :(
+                <li>Cannot clock in as another user one is not clocked out</li>
+                <li>Need to reset buttons when user is changed</li>
+                <li>Read the state off of the google sheet</li>
+            </ul>
         </div>
     );
 }
