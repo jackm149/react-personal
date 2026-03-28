@@ -4,14 +4,16 @@ import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
 export default function App(): React.JSX.Element {
-    //which button is disabled depending on user clock
-    const [whichDisabled, setWhichDisabled] = useState<string>("OUT");
     const [user, setUser] = useState<string>("");
 
-    //sending to googleSheet, takes in a message either IN | OUT based on buttons.
+    // Track last action for each user
+    const [userStates, setUserStates] = useState<
+        Record<string, "IN" | "OUT" | "">
+    >({});
+
     function sendToSheet(message: string) {
         fetch(
-            "https://script.google.com/macros/s/AKfycbx4cjXYRjU-MkjzxOMqWLHSvfCkWNXGfq0JLLPYy1J36LzTzitGOub9DeJLI7cUxpvr/exec",
+            "https://script.google.com/macros/s/AKfycbyoSrQyadVTKPuT4aIR9w-n5Rua2bFH4L6SYixvJnd5dKkBIHDUoSknpIIMaEifB_D2/exec",
             {
                 method: "POST",
                 body: JSON.stringify({
@@ -25,9 +27,16 @@ export default function App(): React.JSX.Element {
         );
     }
 
-    //changing name in textbox controller
     function updateName(event: React.ChangeEvent<HTMLInputElement>) {
         setUser(event.target.value);
+    }
+
+    // Get current state for this user
+    const currentState = userStates[user] || "OUT";
+
+    function handleClock(message: "IN" | "OUT") {
+        sendToSheet(message);
+        setUserStates((prev) => ({ ...prev, [user]: message }));
     }
 
     return (
@@ -44,32 +53,19 @@ export default function App(): React.JSX.Element {
 
             <div className="buttonDefault">
                 <Button
-                    onClick={() => {
-                        sendToSheet("IN");
-                        setWhichDisabled("IN");
-                    }}
-                    disabled={whichDisabled === "IN" || user === ""}
+                    onClick={() => handleClock("IN")}
+                    disabled={currentState === "IN" || user === ""}
                 >
                     IN
                 </Button>
 
                 <Button
-                    onClick={() => {
-                        sendToSheet("OUT");
-                        setWhichDisabled("OUT");
-                    }}
-                    disabled={whichDisabled === "OUT" || user === ""}
+                    onClick={() => handleClock("OUT")}
+                    disabled={currentState === "OUT" || user === ""}
                 >
                     OUT
                 </Button>
             </div>
-
-            <ul>
-                Bugs right now :(
-                <li>Cannot clock in as another user one is not clocked out</li>
-                <li>Need to reset buttons when user is changed</li>
-                <li>Read the state off of the google sheet</li>
-            </ul>
         </div>
     );
 }
