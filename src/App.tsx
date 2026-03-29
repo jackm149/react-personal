@@ -6,7 +6,7 @@ import { Button, Form } from "react-bootstrap";
 export default function App(): React.JSX.Element {
     const [user, setUser] = useState<string>("");
 
-    // Track last action for each user
+    //track last action for each user
     const [userStates, setUserStates] = useState<
         Record<string, "IN" | "OUT" | "">
     >({});
@@ -65,6 +65,12 @@ export default function App(): React.JSX.Element {
                 >
                     OUT
                 </Button>
+            </div>
+            <div>
+                <ol>
+                    Things to do:
+                    <li>Learn sql</li>
+                </ol>
             </div>
         </div>
     );
