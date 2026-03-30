@@ -7,5 +7,5 @@ export default defineConfig({
     server: {
         open: true,
     },
-    base: "/react-personal/",
+    base: "/react-personal/", // this is going to be for the link of the website after ***.github.io
 });
