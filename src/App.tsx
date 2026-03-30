@@ -4,9 +4,19 @@ import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
 export default function App(): React.JSX.Element {
+    //state for user, setUser, holds user's name
+    //this will be formatted as an email later with AUTH, CAS
     const [user, setUser] = useState<string>("");
 
     //track last action for each user
+    /*
+     userStates would look like this for example data:
+     {
+        "Jack" : "IN",
+        "Michael" : "IN",
+        "Giancarlo" : "OUT"
+     }
+    */
     const [userStates, setUserStates] = useState<
         Record<string, "IN" | "OUT" | "">
     >({});
@@ -31,7 +41,9 @@ export default function App(): React.JSX.Element {
         setUser(event.target.value);
     }
 
-    // Get current state for this user
+    /*
+    gets the current state of the user, "OUT" is default for disabling buttons
+    */
     const currentState = userStates[user] || "OUT";
 
     function handleClock(message: "IN" | "OUT") {
@@ -66,11 +78,13 @@ export default function App(): React.JSX.Element {
                     OUT
                 </Button>
             </div>
-            <div>
-                <ol>
-                    Things to do:
-                    <li>Learn sql</li>
-                </ol>
+            {/* This is probably going to cause issues when formatting the page by the way
+            so just make sure that you remove it. I literally just bumped the content of the 
+            div which is not really the right way, making a container outside of .app css style
+            and then formatting from there is a better approach.*/}
+            <div style={{ padding: "300px", paddingRight: "900px" }}>
+                Things to do:
+                <li>Learn sql</li>
             </div>
         </div>
     );
