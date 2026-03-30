@@ -57,11 +57,15 @@ export default function App(): React.JSX.Element {
                 <Clock />
             </div>
 
-            <Form.Group>
-                <Form.Label>Name:</Form.Label>
+            <Form.Group style={{ padding: "20px" }}>
+                <Form.Label>
+                    <b>Name: </b>
+                </Form.Label>
                 <Form.Control value={user} onChange={updateName} />
             </Form.Group>
-            <div>Curr User: {user}</div>
+            <div>
+                <b>Curr User: </b> {user || <i>No User</i>}
+            </div>
 
             <div className="buttonDefault">
                 <Button
