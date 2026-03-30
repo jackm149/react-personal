@@ -78,14 +78,6 @@ export default function App(): React.JSX.Element {
                     OUT
                 </Button>
             </div>
-            {/* This is probably going to cause issues when formatting the page by the way
-            so just make sure that you remove it. I literally just bumped the content of the 
-            div which is not really the right way, making a container outside of .app css style
-            and then formatting from there is a better approach.*/}
-            <div style={{ padding: "300px", paddingRight: "900px" }}>
-                Things to do:
-                <li>Learn sql</li>
-            </div>
         </div>
     );
 }
