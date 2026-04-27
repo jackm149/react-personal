@@ -1,0 +1,9 @@
+/* use .settings on all css in this file */
+
+.settings .testing {
+    color: red;
+}
+
+.settings .testing2 {
+    color: rgb(0, 21, 255);
+}

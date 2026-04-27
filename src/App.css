@@ -1,5 +1,14 @@
+/* ── Reset ─────────────────────────────────────────── */
 body {
     margin: 0;
+}
+
+/* ── Layout ─────────────────────────────────────────── */
+#root {
+    width: 100%;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
 }
 
 .app {
@@ -11,6 +20,7 @@ body {
     color: black;
 }
 
+/* ── Components ─────────────────────────────────────── */
 .clock {
     margin-top: 40px;
     background: #000000;
@@ -26,4 +36,24 @@ body {
     border-radius: 12px;
     padding: 20px;
     width: 200px;
+}
+
+/*  */
+
+.app-nav {
+    background-color: #1a1a2e;
+    padding: 10px;
+    gap: 10px;
+}
+
+.app-nav .nav-link {
+    color: #a0a0b0;
+    border-radius: 6px;
+    padding: 6px 16px;
+    transition: all 0.2s;
+}
+
+.app-nav .nav-link:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
 }

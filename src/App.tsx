@@ -1,87 +1,31 @@
 import "./App.css";
-import Clock from "./components/timeComponent";
-import React, { useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Nav } from "react-bootstrap";
+import { BrowserRouter, Routes, Route, Link } from "react-router";
+
+import Home from "./page_home";
+import Timesheet from "./page_timesheet";
+import Settings from "./page_settings";
 
 export default function App(): React.JSX.Element {
-    //state for user, setUser, holds user's name
-    //this will be formatted as an email later with AUTH, CAS
-    const [user, setUser] = useState<string>("");
-
-    //track last action for each user
-    /*
-     userStates would look like this for example data:
-     {
-        "Jack" : "IN",
-        "Michael" : "IN",
-        "Giancarlo" : "OUT"
-     }
-    */
-    const [userStates, setUserStates] = useState<
-        Record<string, "IN" | "OUT" | "">
-    >({});
-
-    function sendToSheet(message: string) {
-        fetch(
-            "https://script.google.com/macros/s/AKfycbyoSrQyadVTKPuT4aIR9w-n5Rua2bFH4L6SYixvJnd5dKkBIHDUoSknpIIMaEifB_D2/exec",
-            {
-                method: "POST",
-                body: JSON.stringify({
-                    message: message,
-                    user: user,
-                }),
-                headers: {
-                    "Content-Type": "text/plain",
-                },
-            },
-        );
-    }
-
-    function updateName(event: React.ChangeEvent<HTMLInputElement>) {
-        setUser(event.target.value);
-    }
-
-    /*
-    gets the current state of the user, "OUT" is default for disabling buttons
-    */
-    const currentState = userStates[user] || "OUT";
-
-    function handleClock(message: "IN" | "OUT") {
-        sendToSheet(message);
-        setUserStates((prev) => ({ ...prev, [user]: message }));
-    }
-
     return (
-        <div className="app">
-            <div className="clock">
-                <Clock />
-            </div>
+        <BrowserRouter>
+            <Nav className="" style={{ padding: "10px", gap: "1000px" }}>
+                <Nav.Link as={Link} to="/">
+                    Home
+                </Nav.Link>
+                <Nav.Link as={Link} to="/timesheet">
+                    Timesheet
+                </Nav.Link>
+                <Nav.Link as={Link} to="/settings">
+                    Settings
+                </Nav.Link>
+            </Nav>
 
-            <Form.Group style={{ padding: "20px" }}>
-                <Form.Label>
-                    <b>Name: </b>
-                </Form.Label>
-                <Form.Control value={user} onChange={updateName} />
-            </Form.Group>
-            <div>
-                <b>Curr User: </b> {user || <i>No User</i>}
-            </div>
-
-            <div className="buttonDefault">
-                <Button
-                    onClick={() => handleClock("IN")}
-                    disabled={currentState === "IN" || user === ""}
-                >
-                    IN
-                </Button>
-
-                <Button
-                    onClick={() => handleClock("OUT")}
-                    disabled={currentState === "OUT" || user === ""}
-                >
-                    OUT
-                </Button>
-            </div>
-        </div>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/timesheet" element={<Timesheet />} />
+                <Route path="/settings" element={<Settings />} />
+            </Routes>
+        </BrowserRouter>
     );
 }
