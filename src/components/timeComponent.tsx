@@ -11,5 +11,6 @@ export default function Clock() {
         return () => clearInterval(interval);
     }, []);
 
-    return <div className="clock">{time.toLocaleTimeString()}</div>;
+    // no css className here, it is where the component is actually called
+    return <div>{time.toLocaleTimeString()}</div>;
 }
